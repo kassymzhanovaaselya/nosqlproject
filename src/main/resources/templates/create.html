@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Milestone 1</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<body>
+<!-- Edit Modal HTML -->
+<div class="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Employee</h4>
+                </div>
+                <form th:action="@{/add}" th:object="${car}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" th:field="*{name}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" th:field="*{year}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Selling price </label>
+                            <input type="text" th:field="*{selling_price}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>KM driven</label>
+                            <input type="text" th:field="*{km_driven}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fuel</label>
+                            <input type="text" th:field="*{fuel}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Seller type</label>
+                            <input type="text" th:field="*{seller_type}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Transmission</label>
+                            <input type="text" th:field="*{transmission}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Owner</label>
+                            <input type="text" th:field="*{owner}" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script>
+    $(document).ready(function(){
+        let url = window.origin;
+        // Activate tooltip
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // Select/Deselect checkboxes
+        var checkbox = $('table tbody input[type="checkbox"]');
+        $("#selectAll").click(function(){
+            if(this.checked){
+                checkbox.each(function(){
+                    this.checked = true;
+                });
+            } else{
+                checkbox.each(function(){
+                    this.checked = false;
+                });
+            }
+        });
+        checkbox.click(function(){
+            if(!this.checked){
+                $("#selectAll").prop("checked", false);
+            }
+        });
+        $("#deleteAll").click(function () {
+            $.get(url + "/deleteAll");
+        })
+    });
+</script>
