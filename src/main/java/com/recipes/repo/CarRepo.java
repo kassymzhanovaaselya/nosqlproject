@@ -4,7 +4,6 @@ import com.recipes.entity.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 public interface CarRepo extends MongoRepository<Car, String> {

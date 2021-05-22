@@ -4,6 +4,7 @@ import com.recipes.entity.Car;
 import com.recipes.entity.Params;
 import com.recipes.repo.CarRepo;
 import com.recipes.service.CarService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -18,11 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
 public class CarController {
-    @Autowired
     CarService carService;
-
-    @Autowired
     CarRepo carRepo;
 
     @GetMapping("/")
@@ -35,6 +34,7 @@ public class CarController {
         Params params = new Params();
         model.addAttribute("params", params);
         model.addAttribute("cars", carRepo.findAll());
+        System.out.println(carRepo.findAll());
         return "index";
     }
 
@@ -51,6 +51,12 @@ public class CarController {
         return "create";
     }
 
+    @GetMapping("/charts")
+    public String getCharts(Model model){
+        System.out.println("getCharts");
+        return "charts";
+    }
+
     @PostMapping("/add")
     public String addCar(@ModelAttribute Car car){
         System.out.println("add");
@@ -62,7 +68,7 @@ public class CarController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") String id, Model model) {
         Car car = carRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid car Id:" + id));
         carRepo.delete(car);
         return "redirect:/index";
     }
@@ -99,37 +105,6 @@ public class CarController {
         carRepo.deleteAll();
         model.addAttribute("cars", carRepo.findAll());
         return "index";
-    }
-
-    @GetMapping("/tutorials")
-    @ResponseBody
-    public ResponseEntity<List<Car>> getAllCars(@RequestParam(required = false) String name) {
-        return carService.getAllCars(name);
-    }
-
-    @GetMapping("/tutorials/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable("id") String id) {
-        return carService.getCarById(id);
-    }
-
-    @PostMapping("/tutorials")
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
-        return carService.createCar(car);
-    }
-
-    @PutMapping("/tutorials/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable("id") String id, @RequestBody Car car) {
-        return carService.updateCar(id, car);
-    }
-
-    @DeleteMapping("/tutorials/{id}")
-    public ResponseEntity<HttpStatus> deleteCar(@PathVariable("id") String id) {
-        return carService.deleteCar(id);
-    }
-
-    @DeleteMapping("/tutorials")
-    public ResponseEntity<HttpStatus> deleteAllCars() {
-        return carService.deleteAllCars();
     }
 
 }
